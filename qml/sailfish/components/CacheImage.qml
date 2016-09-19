@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import Sailfish.Silica 1.0
 
 import "../js/api.js" as Api
 
@@ -15,7 +16,14 @@ Image {
         visible: (root.status != Image.Ready && sourceUncached != "")
     }
 
+    BusyIndicator {
+        id: busyIndicator
+        size: BusyIndicatorSize.Large
+        anchors.centerIn: parent
+    }
+
     onStatusChanged: {
+        busyIndicator.running = false
         loader.visible = (root.status != Image.Ready)
         if (root.status == Image.Error) {
             //Error loading
@@ -26,6 +34,7 @@ Image {
 
     onSourceUncachedChanged: {
         //console.log("New url arrived: " + sourceUncached + " Old was: " + __sourceUncached);
+        busyIndicator.running = true
         //Remove old queue (if any)
         if (__sourceUncached !== "") {
             imageCache.dequeueObject(__sourceUncached,root.toString());

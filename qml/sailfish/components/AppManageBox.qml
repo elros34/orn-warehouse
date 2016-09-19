@@ -301,7 +301,7 @@ Column {
         }
         Column {
             width: parent.width
-
+            spacing: 10
             visible: isStateKnown && !isInProgress
 
             Button {

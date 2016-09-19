@@ -58,6 +58,7 @@ PageWrapper {
     }
 
     content: SilicaListView {
+        id: searchListView
         model: appsModel
         delegate: appDelegate
         clip: true
@@ -87,6 +88,7 @@ PageWrapper {
             Row {
                 id: pagerRow
                 anchors.centerIn: parent
+                spacing: 4
                 Button {
                     //anchors.horizontalCenter: parent.horizontalCenter
                     text: qsTr("Prev page")
@@ -94,6 +96,7 @@ PageWrapper {
                     onClicked: {
                         searchResult.page--;
                         searchResult.search("");
+                        searchListView.contentY = 0
                     }
                 }
                 Button {
@@ -103,6 +106,7 @@ PageWrapper {
                     onClicked: {
                         searchResult.page++;
                         searchResult.search("");
+                        searchListView.contentY = 0
                     }
                 }
             }
@@ -118,6 +122,7 @@ PageWrapper {
             wrapMode: Text.WordWrap
             visible: appsModel.count == 0
         }
+        VerticalScrollDecorator {}
     }
 
     Component {
